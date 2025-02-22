@@ -10,3 +10,5 @@ enum colorCodes {
   FG_WHITE = 37,
   FG_DEF = 39
 };
+
+// https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
