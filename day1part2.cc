@@ -5,10 +5,10 @@
 #include "algorithm"
 #include "vector"
 #include "map"
+#include "common.h"
 
 int calculate_similarity(std::vector<int> &r_list, std::vector<int> &l_list, int64_t &score) {
     int lSize = l_list.size();
-    // std::sort(l_list.begin(), l_list.begin()+lSize);
 
     std::map<int, int> location_count;
 
@@ -34,7 +34,7 @@ int calculate_similarity(std::vector<int> &r_list, std::vector<int> &l_list, int
 
 int main (int argc, char **argv) {
     if (argc < 2){
-        std::cout << "\033[4;31mno input file specified!\033[0m" << std::endl;
+        std::cout << decorators::underline << decorators::colors::red << "no input file specified!" << decorators::reset_all << std::endl;
         
         return -1;
     }
@@ -59,13 +59,13 @@ int main (int argc, char **argv) {
                 l_list[i] = locID2;
                 i++;
             } else {
-                std::cerr << "\033[4;31mfailed to read the input on line: " << line << "\033[0m\n";
+                std::cerr << decorators::underline << decorators::colors::red << "failed to read the input on line: " << line << decorators::reset_all << std::endl;
             }
         }
         
         input_file.close();
     } else {
-        std::cerr << "\033[4;31mfailed to open the file\033[0m\n";
+        std::cerr << decorators::underline << decorators::colors::red << "failed to open the file" << decorators::reset_all << std::endl;
     }
 
     std::cout << "similarity score- " << calculate_similarity(r_list, l_list, score) << std::endl;
