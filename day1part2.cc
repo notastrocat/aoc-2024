@@ -4,9 +4,30 @@
 #include "sstream"
 #include "algorithm"
 #include "vector"
+#include "map"
 
-int calculate_similarity(std::vector<int> &r_list, std::vector<int> &l_list, int &score) {
-    
+int calculate_similarity(std::vector<int> &r_list, std::vector<int> &l_list, int64_t &score) {
+    int lSize = l_list.size();
+    // std::sort(l_list.begin(), l_list.begin()+lSize);
+
+    std::map<int, int> location_count;
+
+    for (int i = 0; i < lSize; i++) {
+        bool found = false;
+        if (location_count.find(r_list[i]) != location_count.end()) continue;
+        else {
+            for (int j = 0; j < lSize; j++) {
+                if ( r_list[i] == l_list[j] ) {
+                    location_count[r_list[i]]++;
+                    found = true;
+                }
+            }
+            if (false == found) location_count.insert(std::make_pair(r_list[i],0));
+        }
+    }
+
+    for (int i : r_list)
+        score += (i * location_count[i]);
 
     return score;
 }
@@ -46,6 +67,8 @@ int main (int argc, char **argv) {
     } else {
         std::cerr << "\033[4;31mfailed to open the file\033[0m\n";
     }
+
+    std::cout << "similarity score- " << calculate_similarity(r_list, l_list, score) << std::endl;
     
     return 0;
 }
